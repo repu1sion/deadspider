@@ -14,6 +14,8 @@
 
 
 # ----- spider internals ----- #
+LEVEL=1
+XP=12
 red='\033[0;31m'
 white='\033[1;37m'
 NC='\033[0m' # No Color
@@ -90,6 +92,10 @@ reapcaches_f()
 	sudo sh -c 'echo 3 >/proc/sys/vm/drop_caches'
 }
 
+ping_f()
+{
+	ping -c 2 ya.ru
+}
 
 help_f()
 {
@@ -100,6 +106,7 @@ help_f()
 	echo "i - info"
 	echo "m - meminfo"
 	echo "r - reap caches"
+	echo "p - ping"
 
 	echo "h - help"
 
@@ -107,7 +114,7 @@ help_f()
 
 
 #----- main -----#
-echo -n "[...awaken] "
+echo -n "[...awaken. LVL:$LEVEL, XP:$XP] "
 
 while true
 do
@@ -135,10 +142,13 @@ do
 		m) echo -e "${white}[Mem info is here master:]${NC}"
 		mem_f
 		;;
-		r) echo -e "${white}[Reaping caches master.]${NC}"
+		r) echo -e "${white}[Reaping caches master]${NC}"
 		reapcaches_f
 		;;
-		h) echo -e "${white}[Here is the help, master.]${NC}"
+		p) echo -e "${white}[Will ping the internet, master]${NC}"
+		ping_f
+		;;
+		h) echo -e "${white}[Here is the help, master]${NC}"
 		help_f
 	esac
 
