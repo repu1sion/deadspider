@@ -1,32 +1,34 @@
 #!/bin/bash
 
-#deadspider. born 03 June 2015. 1 day.
-#execute your orders and obey your commands...
+#deadspider. born 03 June 2015.
+#will execute your orders and obey your commands...
 
 # ----- spider commands ----- #
 # k - kills
 # s - search
 # d - dies
 # h - helps
+# ...
 
 # ----- spider internal rules ----- #
 #_f means function
+# with 20 XP it goes to the next level
 
 
 # ----- spider internals ----- #
+# xp # 
 LEVEL=1
-XP=12
+XP=17
+# colors #
 red='\033[0;31m'
 white='\033[1;37m'
+yellow='\033[1;33m'
 NC='\033[0m' # No Color
-#echo -e "${red}Hello Stackoverflow${NC}"
 
-
+# variables
+SLEEP_INTERVAL=3
 KILL=1
 VICTIM=odeskteam-qt4
-
-#internal variables
-SLEEP_INTERVAL=3
 
 find_victim_f()
 {
@@ -86,7 +88,7 @@ mem_f()
 	free -m
 }
 
-reapcaches_f()
+clearcaches_f()
 {
 	sync
 	sudo sh -c 'echo 3 >/proc/sys/vm/drop_caches'
@@ -97,6 +99,17 @@ ping_f()
 	ping -c 2 ya.ru
 }
 
+update_f()
+{
+	sudo apt-get update
+	sudo apt-get upgrade
+}
+
+reboot_f()
+{
+	sudo reboot
+}
+
 help_f()
 {
 	echo "k - kill"
@@ -105,16 +118,17 @@ help_f()
 	echo "a - amount"
 	echo "i - info"
 	echo "m - meminfo"
-	echo "r - reap caches"
+	echo "c - clear caches"
 	echo "p - ping"
+	echo "u - update"
+	echo "r - reboot"
 
 	echo "h - help"
-
 }
 
 
 #----- main -----#
-echo -n "[...awaken. LVL:$LEVEL, XP:$XP] "
+echo -en "[...awaken. ${yellow}LVL:$LEVEL, XP:$XP${NC}] "
 
 while true
 do
@@ -142,14 +156,23 @@ do
 		m) echo -e "${white}[Mem info is here master:]${NC}"
 		mem_f
 		;;
-		r) echo -e "${white}[Reaping caches master]${NC}"
-		reapcaches_f
+		c) echo -e "${white}[Clearing caches master]${NC}"
+		clearcaches_f
 		;;
 		p) echo -e "${white}[Will ping the internet, master]${NC}"
 		ping_f
 		;;
+		u) echo -e "${white}[Update the system]${NC}"
+		update_f
+		;;
+		r) echo -e "${white}[Starting reincarnation..., master]${NC}"
+		reboot_f
+		;;
 		h) echo -e "${white}[Here is the help, master]${NC}"
 		help_f
+		;;
+		*) echo -e "${white}[I don't know what is it, master]${NC}"
+		
 	esac
 
 	echo "#----------#"
