@@ -18,7 +18,7 @@
 # ----- spider internals ----- #
 # xp # 
 LEVEL=1
-XP=17
+XP=18
 # colors #
 red='\033[0;31m'
 white='\033[1;37m'
@@ -28,7 +28,7 @@ NC='\033[0m' # No Color
 # variables
 SLEEP_INTERVAL=3
 KILL=1
-VICTIM=odeskteam-qt4
+VICTIM=""
 
 find_victim_f()
 {
@@ -115,8 +115,8 @@ help_f()
 	echo "k - kill"
 	echo "s - search"
 	echo "d - die"
-	echo "a - amount"
-	echo "i - info"
+	echo "a - amount hdd"
+	echo "i - osinfo"
 	echo "m - meminfo"
 	echo "c - clear caches"
 	echo "p - ping"
