@@ -17,8 +17,8 @@
 
 # ----- spider internals ----- #
 # xp # 
-LEVEL=1
-XP=18
+LEVEL=2
+XP=2
 # colors #
 red='\033[0;31m'
 white='\033[1;37m'
@@ -88,7 +88,12 @@ mem_f()
 	free -m
 }
 
-clearcaches_f()
+clearscreen_f()
+{
+	clear
+}
+
+flushcaches_f()
 {
 	sync
 	sudo sh -c 'echo 3 >/proc/sys/vm/drop_caches'
@@ -96,7 +101,7 @@ clearcaches_f()
 
 ping_f()
 {
-	ping -c 2 ya.ru
+	ping -c 2 8.8.8.8
 }
 
 update_f()
@@ -118,7 +123,8 @@ help_f()
 	echo "a - amount hdd"
 	echo "i - osinfo"
 	echo "m - meminfo"
-	echo "c - clear caches"
+	echo "c - clear screen"
+	echo "f - flush caches"
 	echo "p - ping"
 	echo "u - update"
 	echo "r - reboot"
@@ -132,7 +138,7 @@ echo -en "[...awaken. ${yellow}LVL:$LEVEL, XP:$XP${NC}] "
 
 while true
 do
-	echo -e "${white}[Master tell me what should I do]${NC}"
+	echo -e "${white}[What should I do]${NC}"
 	#echo "[Master tell me what should I do]"
 	read IN
 
@@ -156,8 +162,11 @@ do
 		m) echo -e "${white}[Mem info is here master:]${NC}"
 		mem_f
 		;;
-		c) echo -e "${white}[Clearing caches master]${NC}"
-		clearcaches_f
+		c) echo -e "${white}[Clearing screen master]${NC}"
+		clearscreen_f
+		;;
+		f) echo -e "${white}[Flushing caches master]${NC}"
+		flushcaches_f
 		;;
 		p) echo -e "${white}[Will ping the internet, master]${NC}"
 		ping_f
@@ -171,7 +180,7 @@ do
 		h) echo -e "${white}[Here is the help, master]${NC}"
 		help_f
 		;;
-		*) echo -e "${white}[I don't know what is it, master]${NC}"
+		*) echo -e "${white}[I don't know what is it, master. For help press [h]]${NC}"
 		
 	esac
 
