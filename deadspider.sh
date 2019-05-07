@@ -6,7 +6,7 @@
 # ----- spider commands ----- #
 # k - kills
 # s - search
-# d - dies
+# q - quits
 # h - helps
 # ...
 
@@ -18,7 +18,7 @@
 # ----- spider internals ----- #
 # xp # 
 LEVEL=2
-XP=2
+XP=6
 # colors #
 red='\033[0;31m'
 white='\033[1;37m'
@@ -88,6 +88,11 @@ mem_f()
 	free -m
 }
 
+net_f()
+{
+	ifconfig
+}
+
 clearscreen_f()
 {
 	clear
@@ -102,6 +107,8 @@ flushcaches_f()
 ping_f()
 {
 	ping -c 2 8.8.8.8
+	echo ""
+	ping -c 2 kernel.org
 }
 
 update_f()
@@ -115,18 +122,25 @@ reboot_f()
 	sudo reboot
 }
 
+startmanager_f()
+{
+	sudo systemctl start NetworkManager.service
+}
+
 help_f()
 {
 	echo "k - kill"
 	echo "s - search"
-	echo "d - die"
+	echo "q - quit"
 	echo "a - amount hdd"
 	echo "i - osinfo"
 	echo "m - meminfo"
+	echo "n - netinfo"
 	echo "c - clear screen"
 	echo "f - flush caches"
 	echo "p - ping"
 	echo "u - update"
+	echo "b - start NetworkManager"
 	echo "r - reboot"
 
 	echo "h - help"
@@ -150,7 +164,7 @@ do
 		s) echo -e "${white}[Which one do you want me to find master?]${NC}"
 		search_f
 		;;
-		d) echo -e "${white}[I'm already dead but I'll die for you master!]${NC}"
+		q) echo -e "${white}[I'm already dead but I'll die for you master!]${NC}"
 		die_f
 		;;
 		a) echo -e "${white}[Amount is next master:]${NC}"
@@ -161,6 +175,9 @@ do
 		;;
 		m) echo -e "${white}[Mem info is here master:]${NC}"
 		mem_f
+		;;	
+		n) echo -e "${white}[Network info is here master:]${NC}"
+		net_f
 		;;
 		c) echo -e "${white}[Clearing screen master]${NC}"
 		clearscreen_f
@@ -176,6 +193,9 @@ do
 		;;
 		r) echo -e "${white}[Starting reincarnation..., master]${NC}"
 		reboot_f
+		;;
+		b) echo -e "${white}[Starting network manager]${NC}"
+		startmanager_f
 		;;
 		h) echo -e "${white}[Here is the help, master]${NC}"
 		help_f
